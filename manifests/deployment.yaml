@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: aotapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aotapp
+  template:
+    metadata:
+      labels:
+        app: aotapp 
+    spec:
+      containers:
+      - name: aotserver
+        image: prasannavenkatesh2598/aotdemo:aotimage
+        env:
+        - name: NAME
+          valueFrom:
+            configMapKeyRef:
+              name: name-config
+              key: NAME
+        ports:
+        - containerPort: 4000
